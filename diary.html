@@ -7,100 +7,221 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #e8e7deda; --ink: #1c1c1a; --muted: #6b6b63;
-      --accent: #174b9f; --accent-light: #e8eef5; --line: #7c7a75;
+      --bg: #e8e7de;
+      --ink: #1c1c1a;
+      --muted: #6b6b63;
+      --accent: #174b9f;
+      --accent-light: #e8eef5;
+      --line: #7c7a75;
+      --surface: #f0efe8;
     }
+
     body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.75; font-weight: 300; }
+
+    /* ── Nav ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; background: rgba(248,246,241,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
     .nav-name { font-family: 'EB Garamond', serif; font-size: 1.25rem; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* ── Main ── */
     main { max-width: 780px; margin: 0 auto; padding: 7rem 2rem 5rem; }
-    .page-header { margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
     .page-header h1 { font-family: 'EB Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 400; line-height: 1.08; margin-bottom: 0.4rem; }
-    .page-header .subtitle { font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+    .page-header .subtitle { font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+
+    /* ── Divider ── */
     .divider { height: 1px; background: var(--line); margin: 2.5rem 0; }
-    .placeholder-box { opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards; border: 1px dashed var(--line); border-radius: 4px; padding: 4rem 2rem; text-align: center; }
-    .placeholder-box p { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .placeholder-box .coming { font-family: 'EB Garamond', serif; font-size: 1.6rem; color: var(--ink); margin-bottom: 1rem; }
+
+    /* ── Section header ── */
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.75rem; opacity: 0; animation: fadeUp 0.7s ease 0.3s forwards; }
+    .section-header h2 { font-family: 'EB Garamond', serif; font-size: 1.5rem; font-weight: 400; font-style: italic; white-space: nowrap; color: var(--ink); }
+    .section-rule { flex: 1; height: 1px; background: var(--line); }
+
+    /* ── Reference list ── */
+    .references {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ── Reference card ── */
+    .reference-item {
+      background: var(--surface);
+      border: 1px solid rgba(0,0,0,0.09);
+      border-radius: 6px;
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .reference-item:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* stagger each card */
+    .reference-item:nth-child(1)  { animation-delay: 0.35s; }
+    .reference-item:nth-child(2)  { animation-delay: 0.42s; }
+    .reference-item:nth-child(3)  { animation-delay: 0.49s; }
+    .reference-item:nth-child(4)  { animation-delay: 0.56s; }
+    .reference-item:nth-child(5)  { animation-delay: 0.63s; }
+    .reference-item:nth-child(6)  { animation-delay: 0.70s; }
+    .reference-item:nth-child(7)  { animation-delay: 0.77s; }
+    .reference-item:nth-child(8)  { animation-delay: 0.84s; }
+
+    /* Title — clickable link */
+    .ref-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--accent);
+      text-decoration: none;
+      line-height: 1.3;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      width: fit-content;
+    }
+    .ref-title:hover { border-color: var(--accent); }
+
+    /* Author */
+    .ref-author {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Description */
+    .ref-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-top: 2px;
+    }
+
+    /* Inline links inside description */
+    .ref-inline-link {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .ref-inline-link:hover { border-color: var(--accent); }
+
+    /* ── Back link ── */
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2rem; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
     .back-link:hover { border-color: var(--accent); }
+
+    /* ── Footer ── */
     footer { max-width: 780px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--accent); }
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 600px) { nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.2rem; } }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.2rem; }
+      .reference-item { padding: 1rem; }
+    }
   </style>
 </head>
 <body>
+
   <nav>
     <a class="nav-name" href="index.html">Alapan Das</a>
     <ul class="nav-links">
       <li><a href="research.html">Research</a></li>
       <li><a href="photography.html">Photography</a></li>
-      <li><a href="diary.html">Diary</a></li>
+      <li><a href="diary.html" class="active">Diary</a></li>
+      <li><a href="Personal.html">Personal</a></li>
     </ul>
   </nav>
+
   <main>
+
     <div class="page-header">
       <h1>Diary</h1>
+      <p class="subtitle">Notes &amp; references</p>
     </div>
+
     <div class="divider"></div>
+
+    <div class="section-header">
+      <h2>Some references to learn interesting topics</h2>
+      <span class="section-rule"></span>
+    </div>
+
     <div class="references">
-      <h2 class="references-subheader">Some references to learn some interesting topics</h2>
+
       <div class="reference-item">
         <a href="https://www.ihes.fr/~duminil/publi/2017percolation.pdf" class="ref-title" target="_blank">Introduction to Percolation Theory</a>
         <p class="ref-author">Prof. Hugo Duminil-Copin, IHES &amp; U-Geneva</p>
         <p class="ref-desc">A gateway to the mathematical world of the phenomenon of percolation and critical phenomena.</p>
       </div>
-  
+
       <div class="reference-item">
         <a href="https://pi.math.cornell.edu/~hatcher/AT/AT.pdf" class="ref-title" target="_blank">Algebraic Topology</a>
         <p class="ref-author">Prof. Allen Hatcher, Cornell University</p>
         <p class="ref-desc">If you want to learn the algebraic side of topology — Homotopy, Homology, Cohomology, etc. — this is the book to go to. You may also follow this <a href="https://youtube.com/playlist?list=PLpRLWqLFLVTCL15U6N3o35g4uhMSBVA2b&si=GZ-GdhTaU_-2XgqD" class="ref-inline-link" target="_blank">lecture series</a> by Prof. Pierre Albin at UIUC alongside.</p>
       </div>
-  
+
       <div class="reference-item">
         <a href="https://www.math.uchicago.edu/~lawler/finbook.pdf" class="ref-title" target="_blank">Stochastic Calculus</a>
         <p class="ref-author">Prof. G. F. Lawler, UChicago</p>
       </div>
-  
+
       <div class="reference-item">
         <a href="https://terrytao.wordpress.com/wp-content/uploads/2012/12/gsm-126-tao5-measure-book.pdf" class="ref-title" target="_blank">An Introduction to Measure Theory</a>
         <p class="ref-author">Prof. Terence Tao, UCLA</p>
       </div>
-  
+
       <div class="reference-item">
         <a href="https://arxiv.org/pdf/1511.04074" class="ref-title" target="_blank">Lectures on Conformal Field Theory</a>
         <p class="ref-author">Prof. Joshua D. Qualls, National Taiwan University</p>
         <p class="ref-desc">A comprehensive guide to learning CFT.</p>
       </div>
-  
+
       <div class="reference-item">
         <a href="https://www.annualreviews.org/docserver/fulltext/conmatphys/14/1/annurev-conmatphys-031720-030658.pdf" class="ref-title" target="_blank">Random Quantum Circuits</a>
         <p class="ref-author">M.P.A. Fisher, V. Khemani, A. Nahum, S. Vijay</p>
         <p class="ref-desc">What happens when you apply random unitary gates to qubits and do random measurements? This has become a booming field of research, escalated by some breakthrough papers. Also see this <a href="https://www.quantamagazine.org/physicists-observe-unobservable-quantum-phase-transition-20230911/" class="ref-inline-link" target="_blank">Quanta Magazine article</a> on the story behind this development.</p>
       </div>
-  
+
       <div class="reference-item">
         <a href="https://www.cs.cmu.edu/~tom/files/MachineLearningTomMitchell.pdf" class="ref-title" target="_blank">Machine Learning</a>
         <p class="ref-author">Prof. Tom Mitchell, CMU</p>
         <p class="ref-desc">Also recommended: the <a href="https://youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU&si=kUMmbhiAq9gW2N0u" class="ref-inline-link" target="_blank">video lectures</a> by Prof. Andrew Ng at Stanford.</p>
       </div>
-  
+
       <div class="reference-item">
         <a href="https://link.springer.com/book/10.1007/978-1-4939-9084-9" class="ref-title" target="_blank">Quantum Information Meets Quantum Matter</a>
         <p class="ref-desc">An introductory overview of quantum information theory, tensor networks, topological order, entanglement, and more.</p>
       </div>
-  
+
     </div>
+
     <a class="back-link" href="index.html">← Back to home</a>
+
   </main>
+
   <footer>
     <span>© 2026 Alapan Das</span>
     <a href="mailto:alapan.das@phys.ens.psl.eu">alapan.das@phys.ens.psl.eu</a>
   </footer>
+
 </body>
 </html>

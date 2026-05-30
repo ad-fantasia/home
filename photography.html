@@ -7,56 +7,505 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #e8e7deda; --ink: #1c1c1a; --muted: #6b6b63;
-      --accent: #174b9f; --accent-light: #e8eef5; --line: #7c7a75;
+      --bg: #e8e7de;
+      --ink: #1c1c1a;
+      --muted: #6b6b63;
+      --accent: #174b9f;
+      --accent-light: #e8eef5;
+      --line: #7c7a75;
+      --surface: #f0efe8;
+      --radius: 6px;
     }
+
     body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.75; font-weight: 300; }
+
+    /* ── Nav ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; background: rgba(248,246,241,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
     .nav-name { font-family: 'EB Garamond', serif; font-size: 1.25rem; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-    main { max-width: 780px; margin: 0 auto; padding: 7rem 2rem 5rem; }
-    .page-header { margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+
+    /* ── Main ── */
+    main { max-width: 900px; margin: 0 auto; padding: 7rem 2rem 5rem; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
     .page-header h1 { font-family: 'EB Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 400; line-height: 1.08; margin-bottom: 0.4rem; }
-    .page-header .subtitle { font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+    .page-header .subtitle { font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+
     .divider { height: 1px; background: var(--line); margin: 2.5rem 0; }
-    .placeholder-box { opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards; border: 1px dashed var(--line); border-radius: 4px; padding: 4rem 2rem; text-align: center; }
-    .placeholder-box p { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .placeholder-box .coming { font-family: 'EB Garamond', serif; font-size: 1.6rem; color: var(--ink); margin-bottom: 1rem; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.7s ease forwards; }
+    .section:nth-of-type(1) { animation-delay: 0.35s; }
+    .section:nth-of-type(2) { animation-delay: 0.5s; }
+    .section:nth-of-type(3) { animation-delay: 0.65s; }
+
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
+    .section-header h2 { font-family: 'EB Garamond', serif; font-size: 1.6rem; font-weight: 400; font-style: italic; white-space: nowrap; color: var(--ink); }
+    .section-rule { flex: 1; height: 1px; background: var(--line); }
+
+    /* ── Photo grid ── */
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+
+    /* ── Photo card ── */
+    .photo-card {
+      background: var(--surface);
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .photo-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+    .photo-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--accent-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .photo-placeholder svg { opacity: 0.3; width: 32px; height: 32px; }
+
+    .photo-caption { padding: 0.85rem 1rem 1rem; }
+    .photo-tag { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+    .photo-title { font-family: 'EB Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
+    .photo-desc { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.55; }
+    .photo-meta { margin-top: 8px; font-size: 0.72rem; color: var(--muted); font-weight: 300; letter-spacing: 0.04em; opacity: 0.8; }
+
+    /* ── Lightbox overlay ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(20, 19, 17, 0.92);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      animation: lbFadeIn 0.25s ease;
+    }
+    .lightbox.open { display: flex; }
+
+    /* Inner box */
+    .lb-inner {
+      display: flex;
+      gap: 2rem;
+      max-width: 1100px;
+      width: 100%;
+      max-height: 90vh;
+      align-items: center;
+    }
+
+    /* Photo side */
+    .lb-img-wrap {
+      flex: 1 1 60%;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lb-img-wrap img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 4px;
+      display: block;
+    }
+
+    /* Placeholder inside lightbox */
+    .lb-img-wrap .lb-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #2a2926;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5a5a52;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Info side */
+    .lb-info {
+      flex: 0 0 260px;
+      color: #d4d2c8;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .lb-info .lb-tag {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8eaadb;
+    }
+
+    .lb-info .lb-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: #f0efe8;
+      line-height: 1.2;
+    }
+
+    .lb-info .lb-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: #a8a89e;
+      line-height: 1.65;
+    }
+
+    .lb-info .lb-meta {
+      font-size: 0.75rem;
+      color: #6b6b63;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      border-top: 1px solid #3a3934;
+      padding-top: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Close button */
+    .lb-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.75rem;
+      background: none;
+      border: none;
+      color: #a8a89e;
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      z-index: 510;
+    }
+    .lb-close:hover { color: #f0efe8; }
+
+    /* Prev / Next arrows */
+    .lb-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid #3a3934;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #a8a89e;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      z-index: 510;
+    }
+    .lb-arrow:hover { border-color: #8eaadb; color: #f0efe8; }
+    .lb-prev { left: 1.25rem; }
+    .lb-next { right: 1.25rem; }
+
+    /* ── Back link & footer ── */
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2rem; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
     .back-link:hover { border-color: var(--accent); }
-    footer { max-width: 780px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
+    footer { max-width: 900px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--accent); }
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 600px) { nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.2rem; } }
+    @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.2rem; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .lb-inner { flex-direction: column; gap: 1rem; }
+      .lb-info { flex: unset; width: 100%; }
+      .lb-arrow { display: none; }
+    }
   </style>
 </head>
 <body>
+
   <nav>
     <a class="nav-name" href="index.html">Alapan Das</a>
     <ul class="nav-links">
       <li><a href="research.html">Research</a></li>
-      <li><a href="photography.html">Photography</a></li>
+      <li><a href="photography.html" class="active">Photography</a></li>
       <li><a href="diary.html">Diary</a></li>
+      <li><a href="Personal.html">Personal</a></li>
     </ul>
   </nav>
+
   <main>
     <div class="page-header">
       <h1>Photography</h1>
+      <p class="subtitle">Frames from the world</p>
     </div>
+
     <div class="divider"></div>
-    <div class="placeholder-box">
-      <p class="coming">Coming soon</p>
-      <p>A gallery of photos is coming soon.</p>
-      <a class="back-link" href="index.html">← Back to home</a>
+
+    <!-- section class="section"> -->
+      <div class="section-header">
+        <h2>2026</h2>
+        <span class="section-rule"></span>
+      </div>
+      <div class="photo-grid">
+
+        <div class="photo-card"
+        data-tag="Antwerpen, 2026"
+        data-title="Antwerpen Port House"
+        data-src="Photos/Zaha_Hadid.jpg">
+    
+      <img src="Photos/Zaha_Hadid.jpg" alt="Zaha_Hadid" />
+    
+      <div class="photo-caption">
+        <div class="photo-tag">Antwerpen, 2026</div>
+        <div class="photo-title">Antwerpen Port House</div>
+        <!-- <div class="photo-desc">The long arcade lit orange as the city slowed down for evening.</div> -->
+        <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+      </div>
+      </div>
+          <!-- PHOTO 2 -->
+          <div class="photo-card"
+          data-tag="Antwerpen, 2026"
+          data-title="Museum aan de Stroom"
+          data-src="Photos/Antwerpen_museum.jpg">
+      
+        <img src="Photos/Antwerpen_museum.jpg" alt="Louvre" />
+      
+        <div class="photo-caption">
+          <div class="photo-tag">Antwerpen, 2026</div>
+          <div class="photo-title">Museum aan de Stroom</div>
+          <!-- <div class="photo-desc">The long arcade lit orange as the city slowed down for evening.</div> -->
+          <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+        </div>
+      </div>
     </div>
+
+    <!-- ══ Section 2 ══ -->
+    <section class="section">
+      <div class="section-header">
+        <h2>2025</h2>
+        <span class="section-rule"></span>
+      </div>
+      <div class="photo-grid">
+
+        <div class="photo-card"
+        data-tag="Paris, 2025"
+        data-title="Tour de Eiffel"
+        data-src="Photos/Tour_de_Eiffel.jpg">
+    
+      <img src="Photos/Tour_de_Eiffel.jpg" alt="Rue de Rivoli at dusk" />
+    
+      <div class="photo-caption">
+        <div class="photo-tag">Paris, 2025</div>
+        <div class="photo-title">Tour de Eiffel</div>
+        <!-- <div class="photo-desc">The long arcade lit orange as the city slowed down for evening.</div> -->
+        <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+      </div>
+    </div>
+        <!-- PHOTO 2 -->
+        <div class="photo-card"
+        data-tag="Paris, 2025"
+        data-title="Tour de Eiffel"
+        data-src="Photos/Louvre.jpg">
+    
+      <img src="Photos/Louvre.jpg" alt="Louvre" />
+    
+      <div class="photo-caption">
+        <div class="photo-tag">Paris, 2025</div>
+        <div class="photo-title">Musée du Louvre</div>
+        <!-- <div class="photo-desc">The long arcade lit orange as the city slowed down for evening.</div> -->
+        <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+      </div>
+    </div>
+
+        <!-- PHOTO 3 -->
+        <div class="photo-card"
+        data-tag="Paris, 2025"
+        data-title="Tomb of Frederic Chopin"
+        data-desc="Père Lachais Cemetry"
+        data-src="Photos/Fred_Chopin_tomb.jpg">
+    
+      <img src="Photos/Fred_Chopin_tomb.jpg" alt="Tomb_Fred_Chopin" />
+    
+      <div class="photo-caption">
+        <div class="photo-tag">Paris, 2025</div>
+        <div class="photo-title"></div>
+        <div class="photo-desc">Cemetry Père Lachais.</div>
+        <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+      </div>
+    </div>
+
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══ Section 3 ══ -->
+    <section class="section">
+      <div class="section-header">
+        <h2>2024</h2>
+        <span class="section-rule"></span>
+      </div>
+      <div class="photo-grid">
+
+        <!-- PHOTO 4 -->
+        <div class="photo-card"
+        data-tag="Chamonix, 2024"
+        data-title="Track through the Alps"
+        data-src="Photos/Chamonix_rail.png">
+    
+      <img src="Photos/Chamonix_rail.png" alt="Chamonix_rail" />
+    
+      <div class="photo-caption">
+        <div class="photo-tag">Chamonix, 2024</div>
+        <div class="photo-title">Tracks through the Alps</div>
+        <!-- <div class="photo-desc">Chamonix</div> -->
+        <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+      </div>
+    </div>
+
+        <!-- PHOTO 5 -->
+        <div class="photo-card"
+        data-tag="Les Houches, 2024"
+        data-title="Mont Blanc"
+        data-desc="Picture taken from École de Physique de Houches"
+        data-src="Photos/Les_Houches.png">
+    
+      <img src="Photos/Les_Houches.png" alt="Les_Houches" />
+    
+      <div class="photo-caption">
+        <div class="photo-tag">Les Houches, 2024</div>
+        <div class="photo-title">Mont Blanc</div>
+        <!-- <div class="photo-desc">Chamonix</div> -->
+        <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+      </div>
+    </div>
+
+    <!-- PHOTO 6 -->
+        <div class="photo-card"
+        data-tag="Maharashtra, 2024"
+        data-title="Garbett Plateu"
+        data-src="Photos/Garbette_plateau.png">
+
+      <img src="Photos/Garbette_plateau.png" alt="Garbette_plateau" />
+
+      <div class="photo-caption">
+        <div class="photo-tag">Maharashtra, 2024</div>
+        <div class="photo-title">Garbett plateau</div>
+        <!-- <div class="photo-desc">Chamonix</div> -->
+        <!-- <div class="photo-meta">35mm · f/2.0 · ISO 800</div> -->
+      </div>
+    </div>
+
+      </div>
+    </section>
+
+    <a class="back-link" href="index.html">← Back to home</a>
   </main>
+
   <footer>
     <span>© 2026 Alapan Das</span>
     <a href="mailto:alapan.das@phys.ens.psl.eu">alapan.das@phys.ens.psl.eu</a>
   </footer>
+
+  <!-- ══ Lightbox ══ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lb-close" id="lb-close" aria-label="Close">&#x2715;</button>
+    <button class="lb-arrow lb-prev" id="lb-prev" aria-label="Previous">&#8592;</button>
+    <button class="lb-arrow lb-next" id="lb-next" aria-label="Next">&#8594;</button>
+    <div class="lb-inner">
+      <div class="lb-img-wrap" id="lb-img-wrap"></div>
+      <div class="lb-info">
+        <div class="lb-tag" id="lb-tag"></div>
+        <div class="lb-title" id="lb-title"></div>
+        <div class="lb-desc" id="lb-desc"></div>
+        <div class="lb-meta" id="lb-meta"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cards = Array.from(document.querySelectorAll('.photo-card'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImgWrap = document.getElementById('lb-img-wrap');
+    const lbTag = document.getElementById('lb-tag');
+    const lbTitle = document.getElementById('lb-title');
+    const lbDesc = document.getElementById('lb-desc');
+    const lbMeta = document.getElementById('lb-meta');
+
+    let current = 0;
+
+    function openLightbox(index) {
+      current = index;
+      const card = cards[current];
+      const src = card.dataset.src;
+
+      lbTag.textContent = card.dataset.tag;
+      lbTitle.textContent = card.dataset.title;
+      lbDesc.textContent = card.dataset.desc;
+      lbMeta.textContent = card.dataset.meta;
+
+      if (src) {
+        lbImgWrap.innerHTML = `<img src="${src}" alt="${card.dataset.title}" />`;
+      } else {
+        lbImgWrap.innerHTML = `<div class="lb-placeholder">No photo yet</div>`;
+      }
+
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+      current = (current + dir + cards.length) % cards.length;
+      openLightbox(current);
+    }
+
+    cards.forEach((card, i) => card.addEventListener('click', () => openLightbox(i)));
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lb-next').addEventListener('click', () => navigate(1));
+
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+  </script>
+
 </body>
 </html>

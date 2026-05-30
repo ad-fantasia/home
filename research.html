@@ -4,73 +4,257 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Research</title>
+  <title>Research — Alapan Das</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #e8e7deda; --ink: #1c1c1a; --muted: #6b6b63;
-      --accent: #174b9f; --accent-light: #e8eef5; --line: #7c7a75;
+      --bg: #e8e7de;
+      --ink: #1c1c1a;
+      --muted: #6b6b63;
+      --accent: #174b9f;
+      --accent-light: #e8eef5;
+      --line: #7c7a75;
+      --surface: #f0efe8;
     }
+
     body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.75; font-weight: 300; }
+
+    /* ── Nav ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; background: rgba(248,246,241,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
     .nav-name { font-family: 'EB Garamond', serif; font-size: 1.25rem; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* ── Main ── */
     main { max-width: 780px; margin: 0 auto; padding: 7rem 2rem 5rem; }
-    .page-header { margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
     .page-header h1 { font-family: 'EB Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 400; line-height: 1.08; margin-bottom: 0.4rem; }
-    .page-header .subtitle { font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+    .page-header .subtitle { font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+
+    /* ── Divider ── */
     .divider { height: 1px; background: var(--line); margin: 2.5rem 0; }
-    .placeholder-box { opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards; border: 1px dashed var(--line); border-radius: 4px; padding: 4rem 2rem; text-align: center; }
-    .placeholder-box p { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .placeholder-box .coming { font-family: 'EB Garamond', serif; font-size: 1.6rem; color: var(--ink); margin-bottom: 1rem; }
+
+    /* ── Section header ── */
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.75rem; opacity: 0; animation: fadeUp 0.7s ease 0.3s forwards; }
+    .section-header h2 { font-family: 'EB Garamond', serif; font-size: 1.5rem; font-weight: 400; font-style: italic; white-space: nowrap; color: var(--ink); }
+    .section-rule { flex: 1; height: 1px; background: var(--line); }
+
+    /* ── Projects list ── */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ── Project card ── */
+    .project-item {
+      background: var(--surface);
+      border: 1px solid rgba(0,0,0,0.09);
+      border-radius: 6px;
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .project-item:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .project-item:nth-child(1) { animation-delay: 0.35s; }
+    .project-item:nth-child(2) { animation-delay: 0.45s; }
+    .project-item:nth-child(3) { animation-delay: 0.55s; }
+
+    /* Title */
+    .project-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    /* Description */
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Status / arXiv row */
+    .project-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 300;
+      flex-wrap: wrap;
+    }
+
+    /* arXiv badge link */
+    .arxiv-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--accent-light);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 3px 9px 3px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(23,75,159,0.18);
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .arxiv-link:hover {
+      background: #d4dff5;
+      border-color: rgba(23,75,159,0.35);
+    }
+
+    /* arXiv logo SVG inside badge */
+    .arxiv-logo {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* collaborators text */
+    .project-collab {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    /* "Manuscript under preparation" tag */
+    .tag-prep {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 4px;
+      padding: 2px 8px;
+    }
+
+    /* ── Back link ── */
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2rem; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
     .back-link:hover { border-color: var(--accent); }
+
+    /* ── Footer ── */
     footer { max-width: 780px; margin: 0 auto; padding: 2rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--accent); }
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 600px) { nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.2rem; } }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.2rem; }
+      .project-item { padding: 1rem; }
+    }
   </style>
 </head>
 <body>
+
   <nav>
     <a class="nav-name" href="index.html">Alapan Das</a>
     <ul class="nav-links">
-      <li><a href="research.html">Research</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
       <li><a href="photography.html">Photography</a></li>
       <li><a href="diary.html">Diary</a></li>
+      <li><a href="Personal.html">Personal</a></li>
     </ul>
   </nav>
+
   <main>
+
     <div class="page-header">
       <h1>Research</h1>
+      <p class="subtitle">Statistical physics &amp; condensed matter</p>
     </div>
+
     <div class="divider"></div>
+
+    <div class="section-header">
+      <h2>Projects</h2>
+      <span class="section-rule"></span>
+    </div>
+
     <div class="projects-list">
+
+      <!-- PROJECT 1 -->
       <div class="project-item">
         <h2 class="project-title">Bayesian inference in classical lattices and MIPT</h2>
-        <p class="project-desc">We explore Bayesian measurement problem in different lattice models, mainly the Ising model in \(6-\epsilon\) dimensions and \(2\)-dimensions. We uncover an enlarged/emergent symmetry similar to the one seen along the Nishimori line.</p>
-        <span class="project-status"><a href="https://arxiv.org/abs/2604.23346" target="_blank">arXiv:2604.23346</a>, with Prof. Kay Wiese and Prof. Adam Nahum</span>
+        <p class="project-desc">
+          We explore the Bayesian measurement problem in different lattice models, mainly the Ising model in \(6-\epsilon\) dimensions and \(2\)-dimensions. We uncover an enlarged/emergent symmetry similar to the one seen along the Nishimori line.
+        </p>
+        <div class="project-status">
+          <a href="https://arxiv.org/abs/2604.23346" class="arxiv-link" target="_blank">
+            <!-- arXiv logo -->
+            <svg class="arxiv-logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="40" height="40" rx="5" fill="#174b9f" opacity="0.12"/>
+              <text x="4" y="28" font-family="serif" font-size="18" font-weight="700" fill="#174b9f">ar</text>
+              <text x="22" y="28" font-family="serif" font-size="18" font-weight="400" font-style="italic" fill="#174b9f">Xiv</text>
+            </svg>
+            arXiv:2604.23346
+          </a>
+          <span class="project-collab">with Prof. Kay Wiese and Prof. Adam Nahum</span>
+        </div>
       </div>
-      <div class="divider"></div>
+
+      <!-- PROJECT 2 -->
       <div class="project-item">
         <h2 class="project-title">Ising model on Hyperbolic lattices</h2>
-        <p class="project-desc">Using a dual construction and employing a recently developed automorphic Bloch theorem for non-abelian Fuchsian groups, we analytically study the free fermionic spectrum of the Ising model for some specific hyperbolic lattices.  From this, we try to understand their various properties in the intermediate phase between two transitions. (with Prof. Kedar Damle,  Manuscript under preparation)</p>
+        <p class="project-desc">
+          Using a dual construction and employing a recently developed automorphic Bloch theorem for non-abelian Fuchsian groups, we analytically study the free fermionic spectrum of the Ising model for some specific hyperbolic lattices. From this, we try to understand their various properties in the intermediate phase between two transitions.
+        </p>
+        <div class="project-status">
+          <span class="tag-prep">Manuscript under preparation</span>
+          <span class="project-collab">with Prof. Kedar Damle</span>
+        </div>
       </div>
-      <div class="divider"></div>
+
+      <!-- PROJECT 3 -->
       <div class="project-item">
-        <h2 class="project-title"> Free Fermionic Representation of Random Bond Ising Model</h2>
-        <p class="project-desc">In this work, we construct a general dual mapping of the random bond Ising model for arbitrary planar graphs. We explain this dual fermionic Hamiltonian's disorder-induced low-energy (LE) modes using a novel mapping of frustration to isolated sites (say monomers) and their mixing. We give a bound on the quenched-averaged CDF of this LE mode and try to get a better understanding of the Griffith's phase. Furthermore, we investigate the fluctuation of the free energy density along this line using these modes. (with Prof. Kedar Damle,  Manuscript under preparation).</p>
+        <h2 class="project-title">Free Fermionic Representation of Random Bond Ising Model</h2>
+        <p class="project-desc">
+          In this work, we construct a general dual mapping of the random bond Ising model for arbitrary planar graphs. We explain this dual fermionic Hamiltonian's disorder-induced low-energy (LE) modes using a novel mapping of frustration to isolated sites (monomers) and their mixing. We give a bound on the quenched-averaged CDF of this LE mode and try to get a better understanding of the Griffiths phase. Furthermore, we investigate the fluctuation of the free energy density along this line using these modes.
+        </p>
+        <div class="project-status">
+          <span class="tag-prep">Manuscript under preparation</span>
+          <span class="project-collab">with Prof. Kedar Damle</span>
+        </div>
       </div>
+
     </div>
+
     <a class="back-link" href="index.html">← Back to home</a>
+
   </main>
+
   <footer>
     <span>© 2026 Alapan Das</span>
     <a href="mailto:alapan.das@phys.ens.psl.eu">alapan.das@phys.ens.psl.eu</a>
   </footer>
+
 </body>
 </html>
