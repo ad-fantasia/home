@@ -8,15 +8,15 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #f8f6f1; --ink: #1c1c1a; --muted: #6b6b63;
-      --accent: #3a5a8c; --accent-light: #e8eef5; --line: #e0ddd6;
+      --bg: #e8e7deda; --ink: #1c1c1a; --muted: #6b6b63;
+      --accent: #174b9f; --accent-light: #e8eef5; --line: #7c7a75;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.75; font-weight: 300; }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: #1c1d22;; font-size: 16px; line-height: 1.75; font-weight: 300; }
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; background: rgba(248,246,241,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
     .nav-name { font-family: 'EB Garamond', serif; font-size: 1.25rem; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a { font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: #042861; text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
     main { max-width: 780px; margin: 0 auto; padding: 7rem 2rem 5rem; }
     .page-header { margin-bottom: 3.5rem; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
@@ -24,7 +24,7 @@
     .page-header .subtitle { font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
     .divider { height: 1px; background: var(--line); margin: 2.5rem 0; }
     .bio { opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards; }
-    .bio p { color: var(--muted); margin-bottom: 1.2rem; font-size: 1rem; }
+    .bio p { color: #454546;; margin-bottom: 1.2rem; font-size: 1rem; }
     .bio a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
     .bio a:hover { border-color: var(--accent); }
 
